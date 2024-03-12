@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+</head>
+
+<body>
+    <h1 style="text-align: center; color: chartreuse;"><B>Form Validation</B></h1>
+    <div style="align-items: center; justify-content: center; display: flex">
+        <form onsubmit="return validateForm()">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required><br><br>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required><br><br>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    <p id="error-message"></p>
+    <script>
+        function validateForm() {
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const phone = document.getElementById("phone").value;
+
+            let errorMessage = '';
+
+            if (!checkName(name)) {
+                errorMessage += "Enter a valid name.\n ";
+            }
+
+            if (!checkPassword(password)) {
+                errorMessage += "Enter a strong password (at least 8 characters, including uppercase, lowercase, digit, and special character).\n";
+            }
+
+            if (!checkPhoneNumber(phone)) {
+                errorMessage += "Enter a valid phone number.\n";
+            }
+
+            if (!checkEmail(email)) {
+                errorMessage += "Enter a valid email.\n";
+            }
+
+            document.getElementById("error-message").innerHTML = errorMessage;
+            return errorMessage === ''; // Return true if there are no errors
+        }
+
+        function checkEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function checkName(name) {
+            const nameRegex = /^[a-zA-Z0-9\s]+$/;
+            return name.length > 3 && nameRegex.test(name);
+        }
+
+        function checkPassword(password) {
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            return passwordRegex.test(password);
+        }
+
+        function checkPhoneNumber(phone) {
+            const phoneRegex =/^[0-9]{10}$/;
+            return phoneRegex.test(phone);
+        }
+    </script>
+</body>
+
+</html>
